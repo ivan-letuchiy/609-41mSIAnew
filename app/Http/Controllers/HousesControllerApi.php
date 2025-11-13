@@ -10,9 +10,16 @@ class HousesControllerApi extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+    public function index(Request $request): \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
     {
-        return response(House::all());
+        return response(House::limit($request->perpage ?? 5)
+            ->offset(($request->perpage ?? 5) * ($request->page ?? 0))
+            ->get());
+    }
+
+    public function total(): \Illuminate\Http\Response|\Illuminate\Contracts\Routing\ResponseFactory
+    {
+        return response(House::all()->count());
     }
 
     /**
