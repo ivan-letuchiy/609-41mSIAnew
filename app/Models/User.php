@@ -19,7 +19,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'full_name',
         'email',
         'password',
         'role',
@@ -40,14 +39,13 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [ // Исправлено: теперь это свойство, а не метод
+    protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed', // Используется для автоматического хэширования
+        'password' => 'hashed',
     ];
 
     public function owner(): HasOne
     {
         return $this->hasOne(Owner::class);
     }
-
 }

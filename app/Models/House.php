@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class House extends Model
 {
-    protected $fillable = ['house_name'];
+    protected $fillable = ['house_name', 'picture_url'];
 
     public function flats(): HasMany
     {

@@ -10,33 +10,26 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        // Проверка, существует ли таблица 'users'
+        // Создаем таблицу пользователей
         if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
                 $table->id();
-                $table->string('name'); // Колонка 'name'
+                $table->string('name');
                 $table->string('email')->unique();
                 $table->timestamp('email_verified_at')->nullable();
                 $table->string('password');
-                $table->string('role')->default('user'); // Роль пользователя: 'user' или 'admin'
+
+                // Ваше поле роли (оставляем, оно нужно)
+                $table->string('role')->default('user');
+
                 $table->rememberToken();
                 $table->timestamps();
             });
         }
 
-        // Проверка, существует ли таблица 'owners'
-        if (Schema::hasTable('owners')) {
-            // Добавление внешнего ключа после создания таблицы
-            Schema::table('users', function (Blueprint $table) {
-                $table->foreign('name')  // Колонка 'name' в таблице 'users'
-                ->references('full_name') // Ссылается на колонку 'full_name' в таблице 'owners'
-                ->on('owners') // Таблица 'owners'
-                ->onDelete('cascade')  // При удалении владельца, все связанные пользователи тоже будут удалены
-                ->onUpdate('cascade'); // При обновлении данных владельца, обновятся все связанные пользователи
-            });
-        }
+        // --- УДАЛЕН БЛОК СВЯЗИ С OWNERS ---
 
-        // Создание таблицы для сброса пароля
+        // Таблица сброса паролей (оставляем как было)
         if (!Schema::hasTable('password_reset_tokens')) {
             Schema::create('password_reset_tokens', function (Blueprint $table) {
                 $table->string('email')->primary();
@@ -45,7 +38,7 @@ return new class extends Migration {
             });
         }
 
-        // Создание таблицы для сессий
+        // Таблица сессий (оставляем как было)
         if (!Schema::hasTable('sessions')) {
             Schema::create('sessions', function (Blueprint $table) {
                 $table->string('id')->primary();

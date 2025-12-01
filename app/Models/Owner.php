@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo; // Используем этот класс
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -21,8 +21,9 @@ class Owner extends Model
         return $this->hasMany(Vote::class);
     }
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\HasOne
+    // ИСПРАВЛЕНО: hasOne -> belongsTo
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }
