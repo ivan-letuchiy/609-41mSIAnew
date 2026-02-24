@@ -21,7 +21,6 @@ class Owner extends Model
         return $this->hasMany(Vote::class);
     }
 
-    // ИСПРАВЛЕНО: hasOne -> belongsTo
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
